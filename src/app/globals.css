@@ -24,3 +24,42 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+.border-grayColor {
+  border-color: #e0e0e0 !important; /* Màu viền nhẹ nhàng hơn */
+}
+
+.border-t {
+  border-top-width: 1px;
+  border-color: #d1d5db !important; /* Viền trên nhạt hơn */
+}
+
+.border-l {
+  transition: border-color 0.3s ease-in-out;
+}
+
+.border-primary {
+  border-color: #007bff !important; /* Màu xanh nổi bật hơn */
+}
+
+.border-grayColor:hover {
+  border-color: #b0b0b0 !important; /* Hiệu ứng hover làm mềm màu */
+}
+
+.bg-active-sidebar {
+  background-color: #f5f5f5; /* Nền sáng nhẹ cho mục đang chọn */
+  border-radius: 8px; /* Bo tròn viền */
+}
+
+.cursor-pointer:hover {
+  background-color: rgba(0, 123, 255, 0.1); /* Hover có hiệu ứng nhẹ */
+  border-radius: 6px; /* Bo tròn thêm */
+}
+
+.text-primary {
+  color: #007bff !important;
+  font-weight: bold;
+}
+
+.text-grayMiddle {
+  color: #6c757d !important; /* Màu chữ nhẹ hơn */
+}

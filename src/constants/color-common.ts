@@ -1,0 +1,16 @@
+export const ColorCommon = {
+  primary: "#0E4E92",
+  disablePrimary: "#A3B9D1",
+  bgDashBoard: "#ffffff",
+  txtDashBoard: "#ffffff",
+  txtPrimary: "#5F5F64",
+  bgHeader: "#FFFFFF",
+  activeTab: "#2C2C2C",
+  bgTabs: "#f8f8f8",
+  boxRed: "#DC3545",
+  backgroundButtonPrimary: "#0E4E92",
+  grayInfor: "#D1D4D7",
+  grayMiddle: "#B6B6B6",
+  success: "#00AA40",
+  backgroundButtonGray: "#808080",
+};
