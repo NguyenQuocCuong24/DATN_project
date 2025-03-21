@@ -10,6 +10,8 @@ import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 import { Source_Sans_3, STIX_Two_Text } from "next/font/google";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+
 const sourceSans3 = Source_Sans_3({
   variable: "--font-source-sans-3",
   subsets: ["vietnamese"],
@@ -36,9 +38,9 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
+
+
   const cookieStore = cookies();
   const token = (await cookieStore).get("token");
   console.log(token);
@@ -46,11 +48,10 @@ export default async function RootLayout({
   return (
     <html lang='en'>
       <head>
-        <script src='/appConfig.js' type='text/javascript' />
         <link rel='icon' href='/favicon.svg' sizes='any' />
       </head>
       <body
-        // className={`${geistSans.variable} ${geistMono.variable} ${sourceSans3.variable} ${stixTwoText.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${sourceSans3.variable} ${stixTwoText.variable} antialiased`}
       >
         <AppProvider>
           <AppRouterCacheProvider>
@@ -76,3 +77,7 @@ export default async function RootLayout({
     </html>
   );
 }
+// function replace(arg0: string) {
+//   throw new Error("Function not implemented.");
+// }
+

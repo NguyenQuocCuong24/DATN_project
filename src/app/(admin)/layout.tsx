@@ -195,7 +195,7 @@ const Menus: baseMenu[] = [
     {
         id: 8,
         title: "Đăng xuất",
-        path: "",
+        path: "/login",
         // action: async () => {
         //   await authApiRequest.logout();
         // },
@@ -244,17 +244,17 @@ const Layout = ({ children }: any) => {
                 <Typography className='!px-6 !font-medium !text-2xl '>
                     {title}
                 </Typography>
-                <Box className='fixed top-0 right-[50px] '>
+                {/* <Box className='fixed top-0 right-[50px] '>
                     <HeaderSidebar
                         username={user?.roles[0] ?? ""}
                         fullName={user?.username ?? ""}
                     />
-                </Box>
+                </Box> */}
             </Box>
             <Stack direction={"row"}>
-                <Box className={`w-[15%] fixed left-0 top-[70px] right-0 z-50 h-full `}>
+                {/* <Box className={`w-[15%] fixed left-0 top-[70px] right-0 z-50 h-full `}>
                     <Sidebar spacing={"32px"} menu={Menus} pathName={pathName} />
-                </Box>
+                </Box> */}
                 <Box className='w-[85%] min-h-screen ml-[15%] mt-[70px] bg-grayBgLayout'>
                     {children}
                 </Box>

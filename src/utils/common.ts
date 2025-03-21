@@ -23,13 +23,6 @@ export function getCookieValue(cookieKey: string): string | null {
   return cookies ? cookies.split("=")[1] : null;
 }
 
-export const apiEndpointServerComponent = (path: any, fs: any) => {
-  const filePath = path.join(process.cwd(), "public", "appConfig.js");
-  const jsContent = fs.readFileSync(filePath, "utf8");
-  const configStr: any = jsContent.replace("window.appConfig =", "").trim();
-  const objCode = JSON.parse(configStr);
-  return objCode;
-};
 
 export function convertToKebabCase(input: string): string {
   return input

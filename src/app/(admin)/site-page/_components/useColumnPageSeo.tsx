@@ -1,8 +1,6 @@
 import { convertDate } from "@/utils/convertDate";
-import { Box } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import Image from "next/image";
-import Link from "next/link";
 
 type TPageSeo = {
   deletePageSeo: (id: string, code: string) => Promise<void>;
