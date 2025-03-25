@@ -41,9 +41,9 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
 
 
-  const cookieStore = cookies();
-  const token = (await cookieStore).get("token");
-  console.log(token);
+  // const cookieStore = cookies();
+  // const token = (await cookieStore).get("token");
+  // console.log(token);
 
   return (
     <html lang='en'>

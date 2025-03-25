@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     const user = rows[0];
 
     // Kiểm tra mật khẩu
-    const passwordMatch = password === user.passWord; 
+    const passwordMatch = password === user.password;
     if (!passwordMatch) {
       return res.status(401).json({ message: "Email hoặc mật khẩu không đúng" });
     }

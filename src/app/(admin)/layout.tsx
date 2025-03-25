@@ -17,7 +17,7 @@ const Menus: baseMenu[] = [
     {
         id: 1,
         title: "Quản lý các trang chính",
-        path: "/",
+        path: "/site-page",
         subMenu: false,
     },
     {
@@ -31,20 +31,20 @@ const Menus: baseMenu[] = [
         title: "Quản lý giáo viên",
         path: "",
         subMenu: false,
-        subMenuItems: [
-            {
-                id: 1,
-                title: "Hồ sơ giáo viên",
-                path: "/teacher-profile",
-                subMenu: false,
-            },
-            {
-                id: 2,
-                title: "Chấm công-Lịch làm việc",
-                path: "/Timekeeping",
-                subMenu: false,
-            },
-        ],
+        // subMenuItems: [
+        //     {
+        //         id: 1,
+        //         title: "Hồ sơ giáo viên",
+        //         path: "/teacher-profile",
+        //         subMenu: false,
+        //     },
+        //     {
+        //         id: 2,
+        //         title: "Chấm công-Lịch làm việc",
+        //         path: "/Timekeeping",
+        //         subMenu: false,
+        //     },
+        // ],
     },
     {
         id: 4,
@@ -116,31 +116,31 @@ const Menus: baseMenu[] = [
             },
         ],
     },
-    {
-        id: 7,
-        title: "Quản lý cơ sở vật chất",
-        path: "",
-        subMenuItems: [
-            {
-                id: 1,
-                title: "Dụng cụ học tập",
-                path: "/news",
-                subMenu: false,
-            },
-            {
-                id: 2,
-                title: "Bảo trì sửa chữa",
-                path: "/investment-guide",
-                subMenu: false,
-            },
-            {
-                id: 3,
-                title: "Nhận định thị trường",
-                path: "/broker-consensus",
-                subMenu: false,
-            },
-        ],
-    },
+    // {
+    //     id: 7,
+    //     title: "Quản lý cơ sở vật chất",
+    //     path: "",
+    //     subMenuItems: [
+    //         {
+    //             id: 1,
+    //             title: "Dụng cụ học tập",
+    //             path: "/news",
+    //             subMenu: false,
+    //         },
+    //         {
+    //             id: 2,
+    //             title: "Bảo trì sửa chữa",
+    //             path: "/investment-guide",
+    //             subMenu: false,
+    //         },
+    //         {
+    //             id: 3,
+    //             title: "Nhận định thị trường",
+    //             path: "/broker-consensus",
+    //             subMenu: false,
+    //         },
+    //     ],
+    // },
 
     // {
     //   id: 8,
@@ -193,7 +193,7 @@ const Menus: baseMenu[] = [
     //   subMenu: false,
     // },
     {
-        id: 8,
+        id: 7,
         title: "Đăng xuất",
         path: "/login",
         // action: async () => {
@@ -252,9 +252,9 @@ const Layout = ({ children }: any) => {
                 </Box> */}
             </Box>
             <Stack direction={"row"}>
-                {/* <Box className={`w-[15%] fixed left-0 top-[70px] right-0 z-50 h-full `}>
+                <Box className={`w-[15%] fixed left-0 top-[70px] right-0 z-50 h-full `}>
                     <Sidebar spacing={"32px"} menu={Menus} pathName={pathName} />
-                </Box> */}
+                </Box>
                 <Box className='w-[85%] min-h-screen ml-[15%] mt-[70px] bg-grayBgLayout'>
                     {children}
                 </Box>
