@@ -14,28 +14,87 @@ import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 const Menus: baseMenu[] = [
-    { id: 1, title: "Quản lý các trang chính", path: "/site-page", subMenu: false },
-    { id: 2, title: "Quản lí học sinh", path: "/branch-student", subMenu: false },
-    { id: 3, title: "Quản lý giáo viên", path: "", subMenu: false },
     {
-        id: 4, title: "Quản lý học phí và tài chính", path: "", subMenuItems: [
-            { id: 1, title: "Hóa đơn thanh toán học phí", path: "/bill", subMenu: false },
-            { id: 2, title: "Báo cáo hàng tháng", path: "/report", subMenu: false },
+        id: 1,
+        title: "Quản lý các trang chính",
+        path: "/site-page",
+        subMenu: false
+    },
+    {
+        id: 2,
+        title: "Quản lí học sinh",
+        path: "/branch-student",
+        subMenu: false
+    },
+    {
+        id: 3,
+        title: "Quản lý giáo viên",
+        path: "branch-teacher",
+        subMenu: false
+    },
+    {
+        id: 4,
+        title: "Quản lý học phí và tài chính",
+        path: "",
+        subMenuItems: [
+            {
+                id: 1,
+                title: "Hóa đơn thanh toán học phí",
+                path: "/bill",
+                subMenu: false
+            },
+            {
+                id: 2,
+                title: "Báo cáo hàng tháng",
+                path: "/report",
+                subMenu: false
+            },
         ]
     },
     {
-        id: 5, title: "Quản lý thực đơn và dinh dưỡng", path: "", subMenuItems: [
-            { id: 1, title: "Thực đơn hàng ngày", path: "/daily-menu", subMenu: false },
-            { id: 2, title: "Nhà cung cấp thực phẩm", path: "/food-supplier", subMenu: false },
+        id: 5,
+        title: "Quản lý thực đơn và dinh dưỡng",
+        path: "",
+        subMenuItems: [
+            {
+                id: 1,
+                title: "Thực đơn hàng ngày",
+                path: "/daily-menu",
+                subMenu: false
+            },
+            {
+                id: 2,
+                title: "Nhà cung cấp thực phẩm",
+                path: "/food-supplier",
+                subMenu: false
+            },
         ]
     },
     {
-        id: 6, title: "Giao tiếp giữa nhà trường và phụ huynh", path: "", subMenuItems: [
-            { id: 1, title: "Nhận xét của giáo viên", path: "/teacher-reviews", subMenu: false },
-            { id: 2, title: "Công bố thông tin", path: "/information-disclosure", subMenu: false },
+        id: 6,
+        title: "Giao tiếp giữa nhà trường và phụ huynh",
+        path: "",
+        subMenuItems: [
+            {
+                id: 1,
+                title: "Nhận xét của giáo viên",
+                path: "/teacher-reviews",
+                subMenu: false
+            },
+            {
+                id: 2,
+                title: "Công bố thông tin",
+                path: "/information-disclosure",
+                subMenu: false
+            },
         ]
     },
-    { id: 7, title: "Đăng xuất", path: "/login", subMenu: false },
+    {
+        id: 7,
+        title: "Đăng xuất",
+        path: "/login",
+        subMenu: false
+    },
 ];
 
 const Layout = ({ children }: any) => {

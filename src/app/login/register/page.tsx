@@ -54,7 +54,7 @@ export default function RegisterPage() {
                     <form onSubmit={handleRegister}>
                         <input
                             type="text"
-                            placeholder="Nhập tên đăng nhập"
+                            placeholder="Nhập tên của bạn"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             className="w-full p-3 mb-4 border border-gray-300 rounded-lg"
@@ -94,14 +94,14 @@ export default function RegisterPage() {
                                 required
                             />
                         </div>
-                        <select
+                        {/* <select
                             value={role}
                             onChange={(e) => setRole(e.target.value)}
                             className="w-full p-3 mb-4 border border-gray-300 rounded-lg"
                         >
                             <option value="Giáo viên">Giáo viên</option>
                             <option value="Admin">Admin</option>
-                        </select>
+                        </select> */}
                         <button type="submit" className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition">
                             Tạo tài khoản
                         </button>
