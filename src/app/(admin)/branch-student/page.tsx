@@ -14,17 +14,27 @@ const StudentPage = () => {
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [openAddDialog, setOpenAddDialog] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [newStudent, setNewStudent] = useState({ name: "", age: "", parents: "", date: "", contact: "", class: "" });
+  const [newStudent, setNewStudent] = useState(
+    { 
+		FullName: "", 
+		DateOfBirth: "", 
+		Gender: "", 
+		ParentName: "", 
+		ParentPhone: "", 
+		Address: "",
+		ClassID: "", 
+    });
   const columns = useColumnStudent({ deletePageSeo: async () => { } });
 
   interface Student {
-    id?: number;
-    name: string;
-    age: string;
-    parents: string;
-    date: string;
-    contact: string;
-    class: string;
+    StudentID?: number;
+    FullName: string;
+    Gender: string;
+    ParentName: string;
+    ParentPhone: string;
+    DateOfBirth: string;
+    Address: string;
+    ClassID: string;
     [key: string]: string | number | undefined; 
   }
 
@@ -34,7 +44,7 @@ const StudentPage = () => {
 
   useEffect(() => {
     const filtered = students.filter((student) =>
-      student.name.toLowerCase().includes(searchTerm.toLowerCase())
+      student.FullName.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredStudents(filtered);
   }, [searchTerm, students]);
@@ -71,10 +81,10 @@ const StudentPage = () => {
 
 
   const handleUpdate = async () => {
-    if (!selectedStudent || !selectedStudent.id) return;
+    if (!selectedStudent || !selectedStudent.StudentID) return;
 
     try {
-      const res = await fetch(`/api/student?id=${selectedStudent.id}`, {
+      const res = await fetch(`/api/student?id=${selectedStudent.StudentID}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(selectedStudent),
@@ -92,7 +102,7 @@ const StudentPage = () => {
   const handleAddStudent = async () => {
     console.log(" Dữ liệu học sinh gửi đi:", newStudent);
 
-    if (!newStudent.name.trim()) {
+    if (!newStudent.FullName.trim()) {
       alert("Tên học sinh không được để trống");
       return;
     }
@@ -113,7 +123,15 @@ const StudentPage = () => {
 
       fetchStudent(); // Load lại danh sách học sinh
       setOpenAddDialog(false);
-      setNewStudent({ name: "", age: "", parents: "", date: "", contact: "", class: "" });
+      setNewStudent({ 
+		FullName: "", 
+		DateOfBirth: "", 
+		Gender: "", 
+		ParentName: "", 
+		ParentPhone: "", 
+		Address: "",
+		ClassID: "", 
+	});
     } catch (error) {
       console.error("🔥 Lỗi khi thêm học sinh:", error);
     }
@@ -149,43 +167,50 @@ const StudentPage = () => {
             label="Tên học sinh"
             fullWidth
             margin="dense"
-            value={newStudent.name}
-            onChange={(e) => setNewStudent({ ...newStudent, name: e.target.value })}
+            value={newStudent.FullName}
+            onChange={(e) => setNewStudent({ ...newStudent, FullName: e.target.value })}
           />
-          <TextField
-            label="Tuổi"
+		  <TextField
+            label="Ngày sinh"
             fullWidth
             margin="dense"
-            value={newStudent.age}
-            onChange={(e) => setNewStudent({ ...newStudent, age: e.target.value })}
+            value={newStudent.DateOfBirth}
+            onChange={(e) => setNewStudent({ ...newStudent, DateOfBirth: e.target.value })}
           />
           <TextField
             label="Phụ huynh"
             fullWidth
             margin="dense"
-            value={newStudent.parents}
-            onChange={(e) => setNewStudent({ ...newStudent, parents: e.target.value })}
+            value={newStudent.ParentName}
+            onChange={(e) => setNewStudent({ ...newStudent, ParentName: e.target.value })}
           />
           <TextField
-            label="Ngày sinh"
+            label="Số điện thoại phụ huynh"
             fullWidth
             margin="dense"
-            value={newStudent.date}
-            onChange={(e) => setNewStudent({ ...newStudent, date: e.target.value })}
+            value={newStudent.ParentPhone}
+            onChange={(e) => setNewStudent({ ...newStudent, ParentPhone: e.target.value })}
           />
           <TextField
-            label="Liên hệ"
+            label="Giới tính"
             fullWidth
             margin="dense"
-            value={newStudent.contact}
-            onChange={(e) => setNewStudent({ ...newStudent, contact: e.target.value })}
+            value={newStudent.Gender}
+            onChange={(e) => setNewStudent({ ...newStudent, Gender: e.target.value })}
           />
           <TextField
             label="Lớp"
             fullWidth
             margin="dense"
-            value={newStudent.class}
-            onChange={(e) => setNewStudent({ ...newStudent, class: e.target.value })}
+            value={newStudent.ClassID}
+            onChange={(e) => setNewStudent({ ...newStudent, ClassID: e.target.value })}
+          />
+		  <TextField
+            label="Địa chỉ"
+            fullWidth
+            margin="dense"
+            value={newStudent.Address}
+            onChange={(e) => setNewStudent({ ...newStudent, Address: e.target.value })}
           />
         </DialogContent>
 
@@ -222,12 +247,12 @@ const StudentPage = () => {
             width: 100,
             renderCell: (params) => (
               <div className="flex justify-center items-center w-full h-full">
-                <Image src="/assets/icons/recycle-bin.svg" alt="Delete" width={23} height={23} className="cursor-pointer" onClick={() => handleDelete(params.row.id)} />
+                <Image src="/assets/icons/recycle-bin.svg" alt="Delete" width={23} height={23} className="cursor-pointer" onClick={() => handleDelete(params.row.StudentID)} />
               </div>
             ),
           },
         ]}
-        getRowId={(row) => row.id}
+        getRowId={(row) => row.StudentID}
         autoHeight
         pageSizeOptions={[5, 10, 20]}
         disableRowSelectionOnClick
@@ -237,7 +262,7 @@ const StudentPage = () => {
       <Dialog open={openEditDialog} onClose={() => setOpenEditDialog(false)}>
         <DialogTitle>Sửa Học Sinh</DialogTitle>
         <DialogContent>
-          {["name", "age", "parents", "date", "contact", "class"].map((field) => (
+          {["FullName", "DateOfBirth", "Gender", "ClassID", "Address", "ParentPhone", "ParentName"].map((field) => (
             <TextField
               key={field}
               label={field}

@@ -81,3 +81,11 @@ export const convertSlugUrl = (slug: string) => {
 
   return formattedSlug;
 };
+
+
+export const convertGender = (gender : number) => {
+    if (gender == 0) {
+        return 'Nam';
+    }
+    return 'Nữ';
+}

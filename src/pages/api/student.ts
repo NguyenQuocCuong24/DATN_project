@@ -1,14 +1,20 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import pool from "@/configs/db";
+import { log } from "console";
+import { convertStringToDate } from "@/utils/convertDate";
+import { covertGender } from "../helper/helper";
+
 
 //  Get student (có search)
 const getStudents = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const search = req.query.search ? `%${req.query.search}%` : "%";
     const [rows]: any = await pool.query(
-      "SELECT id, name, age, date, parents, contact, class FROM student WHERE name LIKE ?",
+      `SELECT StudentID, FullName, DateOfBirth, Gender, ClassID, Address, Status, 
+      ParentName, ParentPhone
+      FROM students WHERE Deleted_at IS NULL and FullName LIKE ?`,
       [search]
-    );
+    );    
     return res.status(200).json(rows);
   } catch (error) {
     console.error("Lỗi khi lấy danh sách học sinh:", error);
@@ -19,15 +25,17 @@ const getStudents = async (req: NextApiRequest, res: NextApiResponse) => {
 // Add student
 const addStudent = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { name, age, parents, date, contact, class: studentClass } = req.body;
-
-    if (!name || !age || !parents || !date || !contact || !studentClass) {
+    const { FullName, DateOfBirth, Gender, ClassID, Address, ParentPhone, ParentName } = req.body;
+    let date = convertStringToDate(DateOfBirth);
+    let gender = covertGender(Gender);
+    
+    if (!FullName) {
       return res.status(400).json({ message: "Thiếu thông tin học sinh" });
     }
 
     const [result]: any = await pool.query(
-      "INSERT INTO student (name, age, parents, date, contact, class) VALUES (?, ?, ?, ?, ?, ?)",
-      [name, age, parents, date, contact, studentClass]
+      "INSERT INTO students (FullName, DateOfBirth, Gender, ClassID, Address, ParentPhone, ParentName, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+      [FullName, date, gender, ClassID, Address, ParentPhone, ParentName, 1]
     );
 
     res.status(201).json({ message: "Thêm học sinh thành công", id: result.insertId });
@@ -42,16 +50,17 @@ const addStudent = async (req: NextApiRequest, res: NextApiResponse) => {
 const updateStudent = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
   try {
-    const { name, age, parents, date, contact } = req.body;
-    const classValue = req.body["class"]; // Đọc giá trị 'class' an toàn
+    const { FullName, DateOfBirth, Gender, ClassID, Address, ParentPhone, ParentName } = req.body;
+    let date = convertStringToDate(DateOfBirth);
+    let gender = covertGender(Gender);
 
-    if (!name || !age || !parents || !date || !contact || !classValue) {
-      return res.status(400).json({ message: "Thiếu thông tin cập nhật" });
+    if (!FullName) {
+      return res.status(400).json({ message: "Thiếu thông tin học sinh" });
     }
 
     const [result]: any = await pool.query(
-      "UPDATE student SET name = ?, age =?, parents = ?, date = ?, contact = ?, class = ? WHERE id = ?",
-      [name, age, parents, date, contact, classValue, id]
+      "UPDATE students SET FullName = ?, DateOfBirth =?, Gender = ?, ClassID = ?, Address = ?, ParentPhone = ?, ParentName = ? WHERE StudentID = ?",
+      [FullName, date, gender, ClassID, Address, ParentPhone, ParentName, id]
     );
 
     if (result.affectedRows === 0) {
@@ -68,8 +77,9 @@ const updateStudent = async (req: NextApiRequest, res: NextApiResponse) => {
 // Delete Student
 const deleteStudent = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
+  const now = new Date();
   try {
-    const [result]: any = await pool.query("DELETE FROM student WHERE id = ?", [id]);
+    const [result]: any = await pool.query("UPDATE students Set Deleted_at = ? WHERE StudentID = ?", [now, id]);
 
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: "Không tìm thấy học sinh" });

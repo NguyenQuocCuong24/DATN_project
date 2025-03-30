@@ -1,4 +1,6 @@
+import { convertGender } from "@/utils/common";
 import { GridColDef } from "@mui/x-data-grid";
+import dayjs from "dayjs";
 
 type TPageSeo = {
   deletePageSeo: (id: string, code: string) => Promise<void>;
@@ -7,47 +9,62 @@ type TPageSeo = {
 const useColumnStudent = (props: TPageSeo) => {
   const columns: GridColDef[] = [
     {
-      field: "name",
+      field: "FullName",
       headerName: "Tên học sinh",
       headerAlign: "left",
       align: "left",
       flex: 1,
+      width: 250,
     },
     {
-      field: "age",
-      headerName: "Tuổi",
-      headerAlign: "left",
-      align: "left",
-      flex: 1,
-    },
-    {
-      field: "parents",
+      field: "ParentName",
       headerName: "Phụ huynh ",
       headerAlign: "left",
       align: "left",
       width: 250,
     },
     {
-      field: "date",
-      headerName: "Ngày sinh",
-      headerAlign: "left",
-      align: "left",
-      width: 250,
-    },
-    {
-      field: "contact",
-      headerName: "Liên hệ",
+      field: "ParentPhone",
+      headerName: "Số điện thoại Phụ huynh ",
       headerAlign: "left",
       align: "left",
       width: 144,
     },
     {
-      field: "class",
+      field: "DateOfBirth",
+      headerName: "Ngày sinh",
+      headerAlign: "left",
+      align: "left",
+      width: 250,
+      valueGetter: (params) => {
+        return params ? dayjs(params).format("DD/MM/YYYY") : "";
+      },
+    },
+    {
+      field: "Address",
+      headerName: "Địa chỉ",
+      headerAlign: "left",
+      align: "left",
+      width: 144,
+    },
+    {
+      field: "ClassID",
       headerName: "Lớp",
       headerAlign: "left",
       align: "left",
       width: 144,
     },
+    {
+      field: "Gender",
+      headerName: "Giới tính",
+      headerAlign: "left",
+      align: "left",
+      width: 144,
+      valueGetter: (params) => {
+        return convertGender(params);
+      },
+    },
+
   ];
 
   return columns;
