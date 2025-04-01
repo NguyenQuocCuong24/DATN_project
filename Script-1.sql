@@ -1,0 +1,69 @@
+CREATE TABLE Students (
+    StudentID INT PRIMARY KEY AUTO_INCREMENT,
+    FullName VARCHAR(100) NOT NULL,
+    DateOfBirth DATE,
+    Gender int,
+    ClassID INT,
+    ParentName VARCHAR(100),
+    ParentPhone VARCHAR(15),
+    Address TEXT,
+    Status int,
+    Created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    Deleted_at TIMESTAMP NULL DEFAULT NULL
+);
+
+CREATE TABLE Teachers (
+    TeacherID INT PRIMARY KEY AUTO_INCREMENT,
+    FullName VARCHAR(100) NOT NULL,
+    DateOfBirth DATE,
+    Gender int,
+    PhoneNumber VARCHAR(15),
+    Email VARCHAR(100),
+    Address TEXT,
+    Qualification VARCHAR(50),
+  	Status int,
+    Created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    Deleted_at TIMESTAMP NULL DEFAULT NULL
+);
+
+CREATE TABLE Classes (
+    ClassID INT PRIMARY KEY AUTO_INCREMENT,
+    ClassName VARCHAR(100) NOT NULL,
+    TeacherID INT,
+    MaxStudents INT,
+    SchoolYearStart YEAR,
+    SchoolYearEnd YEAR,
+    Created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    Deleted_at TIMESTAMP NULL DEFAULT NULL
+)
+
+CREATE TABLE Schedule (
+    ScheduleID INT PRIMARY KEY AUTO_INCREMENT,
+    ClassID INT,
+    DayOfWeek VARCHAR(20),
+    Subject VARCHAR(100),
+    StartTime TIME,
+    EndTime TIME,
+    Created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    Deleted_at TIMESTAMP NULL DEFAULT NULL
+)
+
+-- Tuition Table
+CREATE TABLE Tuition (
+    TuitionID INT PRIMARY KEY AUTO_INCREMENT,
+    StudentID INT,
+    SchoolYear YEAR,
+    Month INT,
+    AmountDue DECIMAL(10,2),
+    AmountPaid DECIMAL(10,2),
+    PaymentDate DATE,
+    Status INT,
+    Notes TEXT,
+    Created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    Deleted_at TIMESTAMP NULL DEFAULT NULL
+);
