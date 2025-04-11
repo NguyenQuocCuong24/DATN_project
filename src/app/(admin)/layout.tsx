@@ -127,7 +127,9 @@ const Layout = ({ children }: any) => {
             <Stack direction="row" className="flex-grow pt-16">
                 {/* Sidebar */}
                 <Box className="w-1/6 fixed left-0 top-16 h-full bg-gray-100 shadow-lg">
-                    <Sidebar spacing="32px" menu={Menus} pathName={pathName} />
+                    {/* <Sidebar spacing="32px" menu={Menus} pathName={pathName} /> */}
+                    <Sidebar spacing="32px" menu={Menus} pathName={pathName || ''} />
+
                 </Box>
 
                 {/* Content */}

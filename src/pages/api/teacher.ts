@@ -6,15 +6,31 @@ const getTeacher = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         const search = req.query.search ? `%${req.query.search}%` : "%";
         const [rows]: any = await pool.query(
-            "SELECT id, name, age, email, contact, adress, class, specialization FROM teacher WHERE name LIKE ?",
-            [search]
+            "SELECT id, name, age, email, contact, adress, class, specialization FROM teacher WHERE name LIKE ?", 
+          [search]
         );
         return res.status(200).json(rows);
-    } catch (error) {
-        console.error("Lỗi khi lấy danh sách giáo viên:", error);
-
+      } catch (error) {
+        console.error("Lỗi khi lấy danh sách giáo viên :", error);
         return res.status(500).json({ message: "Lỗi server" });
-    }
+      }
+    // try {
+    //     // const query = req.query;
+    //     // 0, 10, 20, 30, .., 90
+    //     // 1, 2,  3,         , 10
+    //     // const offet = (query.pageIndex) * query.pageSize;
+    //     // const search = req.query.search ? `%${req.query.search}%` : "%";
+    //     const [rows]: any = await pool.query(
+    //         "SELECT id, name, age, email, contact, adress, class, specialization FROM teacher WHERE name LIKE ?",
+    //         // "SELECT id, name, age, email, contact, adress, class, specialization FROM teacher WHERE name LIKE ? limit ? offset ?",
+    //         // [query.name, query.pageSize, offset]
+    //     );
+    //     return res.status(200).json(rows);
+    // } catch (error) {
+    //     console.error("Lỗi khi lấy danh sách giáo viên:", error);
+
+    //     return res.status(500).json({ message: "Lỗi server" });
+    // }
 };
 
 // Add Teacher

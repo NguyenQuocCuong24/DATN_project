@@ -18,8 +18,11 @@ const getStudents = async (req: NextApiRequest, res: NextApiResponse) => {
 
 // Add student
 const addStudent = async (req: NextApiRequest, res: NextApiResponse) => {
+      // nếu là aadmin mới có quyền add?
+      // kiểm tra xem token có hợp lệ không
+      // phân quyền nếu cần thiết
   try {
-    const { name, age, parents, date, contact, class: studentClass } = req.body;
+    const { name, age, parents, date, contact, studentClass } = req.body;
 
     if (!name || !age || !parents || !date || !contact || !studentClass) {
       return res.status(400).json({ message: "Thiếu thông tin học sinh" });
