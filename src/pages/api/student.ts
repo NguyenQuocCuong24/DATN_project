@@ -24,6 +24,9 @@ const getStudents = async (req: NextApiRequest, res: NextApiResponse) => {
 
 // Add student
 const addStudent = async (req: NextApiRequest, res: NextApiResponse) => {
+      // nếu là aadmin mới có quyền add?
+      // kiểm tra xem token có hợp lệ không
+      // phân quyền nếu cần thiết
   try {
     const { FullName, DateOfBirth, Gender, ClassID, Address, ParentPhone, ParentName } = req.body;
     let date = convertStringToDate(DateOfBirth);

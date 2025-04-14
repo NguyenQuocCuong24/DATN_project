@@ -1,15 +1,10 @@
 @import "tailwindcss";
+@tailwind utilities;
 
+/* Custom variables */
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,13 +19,15 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Your custom styles */
 .border-grayColor {
-  border-color: #e0e0e0 !important; /* Màu viền nhẹ nhàng hơn */
+  border-color: #e0e0e0 !important;
 }
 
 .border-t {
   border-top-width: 1px;
-  border-color: #d1d5db !important; /* Viền trên nhạt hơn */
+  border-color: #d1d5db !important;
 }
 
 .border-l {
@@ -38,21 +35,21 @@ body {
 }
 
 .border-primary {
-  border-color: #007bff !important; /* Màu xanh nổi bật hơn */
+  border-color: #007bff !important;
 }
 
 .border-grayColor:hover {
-  border-color: #b0b0b0 !important; /* Hiệu ứng hover làm mềm màu */
+  border-color: #b0b0b0 !important;
 }
 
 .bg-active-sidebar {
-  background-color: #f5f5f5; /* Nền sáng nhẹ cho mục đang chọn */
-  border-radius: 8px; /* Bo tròn viền */
+  background-color: #f5f5f5;
+  border-radius: 8px;
 }
 
 .cursor-pointer:hover {
-  background-color: rgba(0, 123, 255, 0.1); /* Hover có hiệu ứng nhẹ */
-  border-radius: 6px; /* Bo tròn thêm */
+  background-color: rgba(0, 123, 255, 0.1);
+  border-radius: 6px;
 }
 
 .text-primary {
@@ -61,5 +58,5 @@ body {
 }
 
 .text-grayMiddle {
-  color: #6c757d !important; /* Màu chữ nhẹ hơn */
+  color: #6c757d !important;
 }
