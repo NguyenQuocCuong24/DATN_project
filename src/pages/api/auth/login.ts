@@ -25,8 +25,8 @@ export default async function handler(req, res) {
     }
 
     // Tạo token JWT
-    const token = jwt.sign({ id: user.id, email: user.email }, "SECRET_KEY", { expiresIn: "1h" });
-
+    const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, "SECRET_KEY", { expiresIn: "1h" });
+    res.setHeader('Set-Cookie', `token=${token}; Path=/; HttpOnly; Secure; SameSite=Strict`);
     return res.status(200).json({ message: "Đăng nhập thành công", token });
   } catch (error) {
     console.error(" Lỗi server:", error);

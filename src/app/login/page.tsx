@@ -21,7 +21,6 @@ export default function LoginPage() {
 
         const data = await res.json();
         if (res.ok) {
-            document.cookie = `token=${data.token}; path=/; Secure; HttpOnly`;
             router.push("/site-page");
         } else {
             setMessage(data.message);

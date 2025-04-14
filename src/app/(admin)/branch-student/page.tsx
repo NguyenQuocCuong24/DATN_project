@@ -54,8 +54,9 @@ const StudentPage = () => {
     try {
       const res = await fetch("/api/student");
       const data = await res.json();
-      setStudents(data);
-      setFilteredStudents(data);
+
+      setStudents(data.rows);
+      setFilteredStudents(data.rows);
     } catch (error) {
       console.error("Lỗi khi lấy danh sách học sinh:", error);
     }

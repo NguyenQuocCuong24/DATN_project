@@ -3,19 +3,38 @@ import pool from "@/configs/db";
 import { log } from "console";
 import { convertStringToDate } from "@/utils/convertDate";
 import { covertGender } from "../helper/helper";
+import { verifyToken } from "../helper/auth";
 
 
 //  Get student (có search)
 const getStudents = async (req: NextApiRequest, res: NextApiResponse) => {
+  const auth = verifyToken(req, ['1']);
+      
+  if (!auth.valid) {
+    return res.status(auth.statusCode).json({ message: auth.message });
+  }
   try {
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+    const offset = (page - 1) * limit;
+
     const search = req.query.search ? `%${req.query.search}%` : "%";
     const [rows]: any = await pool.query(
       `SELECT StudentID, FullName, DateOfBirth, Gender, ClassID, Address, Status, 
       ParentName, ParentPhone
-      FROM students WHERE Deleted_at IS NULL and FullName LIKE ?`,
+      FROM students WHERE Deleted_at IS NULL and FullName LIKE ? 
+      LIMIT ? OFFSET ?`,
+      [search, limit, offset]
+    );
+    
+    const [[{ total }]]: any = await pool.query(
+      `SELECT COUNT(*) as total 
+       FROM students 
+       WHERE Deleted_at IS NULL AND FullName LIKE ?`,
       [search]
-    );    
-    return res.status(200).json(rows);
+    );
+
+    return res.status(200).json({ rows, total });
   } catch (error) {
     console.error("Lỗi khi lấy danh sách học sinh:", error);
     return res.status(500).json({ message: "Lỗi server" });
@@ -24,9 +43,11 @@ const getStudents = async (req: NextApiRequest, res: NextApiResponse) => {
 
 // Add student
 const addStudent = async (req: NextApiRequest, res: NextApiResponse) => {
-      // nếu là aadmin mới có quyền add?
-      // kiểm tra xem token có hợp lệ không
-      // phân quyền nếu cần thiết
+  const auth = verifyToken(req, ['1']);
+
+  if (!auth.valid) {
+    return res.status(auth.statusCode).json({ message: auth.message });
+  }
   try {
     const { FullName, DateOfBirth, Gender, ClassID, Address, ParentPhone, ParentName } = req.body;
     let date = convertStringToDate(DateOfBirth);
@@ -52,6 +73,11 @@ const addStudent = async (req: NextApiRequest, res: NextApiResponse) => {
 // uppdate student
 const updateStudent = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
+  const auth = verifyToken(req, ['1']);
+
+  if (!auth.valid) {
+    return res.status(auth.statusCode).json({ message: auth.message });
+  }
   try {
     const { FullName, DateOfBirth, Gender, ClassID, Address, ParentPhone, ParentName } = req.body;
     let date = convertStringToDate(DateOfBirth);
@@ -81,6 +107,11 @@ const updateStudent = async (req: NextApiRequest, res: NextApiResponse) => {
 const deleteStudent = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
   const now = new Date();
+  const auth = verifyToken(req, ['1']);
+
+  if (!auth.valid) {
+    return res.status(auth.statusCode).json({ message: auth.message });
+  }
   try {
     const [result]: any = await pool.query("UPDATE students Set Deleted_at = ? WHERE StudentID = ?", [now, id]);
 

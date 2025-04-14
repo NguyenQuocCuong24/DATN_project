@@ -235,7 +235,7 @@ const TeacherPage = () => {
             ),
           },
         ]}
-        getRowId={(row) => row.id}
+        getRowId={(row) => row.TeacherID}
         autoHeight
         pageSizeOptions={[5, 10, 20]}
         disableRowSelectionOnClick

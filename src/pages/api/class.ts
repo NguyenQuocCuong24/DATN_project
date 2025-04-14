@@ -1,15 +1,36 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import pool from "@/configs/db";
+import { verifyToken } from "../helper/auth";
 
 const getClasses = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
+    const auth = verifyToken(req, ['1']);
+        
+    if (!auth.valid) {
+      return res.status(auth.statusCode).json({ message: auth.message });
+    }
+
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+    const offset = (page - 1) * limit;
+
     const search = req.query.search ? `%${req.query.search}%` : "%";
     const [rows]: any = await pool.query(
       `SELECT ClassID, ClassName, TeacherID, MaxStudents, SchoolYearStart, SchoolYearEnd
-      FROM classes WHERE Deleted_at IS NULL and ClassName LIKE ?`,
+      FROM classes WHERE Deleted_at IS NULL and ClassName LIKE ?
+      LIMIT ? OFFSET ?`,
+      [search, limit, offset]
+    );  
+      
+    const [[{ total }]]: any = await pool.query(
+      `SELECT COUNT(*) as total 
+       FROM classes 
+       WHERE Deleted_at IS NULL AND FullName LIKE ?`,
       [search]
-    );    
-    return res.status(200).json(rows);
+    );
+
+    return res.status(200).json({ rows, total });
+
   } catch (error) {
     console.error("Lỗi khi lấy danh sách lớp:", error);
     return res.status(500).json({ message: "Lỗi server" });
@@ -18,6 +39,11 @@ const getClasses = async (req: NextApiRequest, res: NextApiResponse) => {
 
 const addClasses = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
+    const auth = verifyToken(req, ['1']);
+        
+    if (!auth.valid) {
+      return res.status(auth.statusCode).json({ message: auth.message });
+    }
     const { ClassName, TeacherID, MaxStudents, SchoolYearStart, SchoolYearEnd } = req.body;
     
     if (!ClassName) {
@@ -39,6 +65,11 @@ const addClasses = async (req: NextApiRequest, res: NextApiResponse) => {
 
 const updateClasses = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
+  const auth = verifyToken(req, ['1']);
+          
+  if (!auth.valid) {
+    return res.status(auth.statusCode).json({ message: auth.message });
+  }
   try {
     const { ClassName, TeacherID, MaxStudents, SchoolYearStart, SchoolYearEnd } = req.body;
 
@@ -65,6 +96,11 @@ const updateClasses = async (req: NextApiRequest, res: NextApiResponse) => {
 const deleteClasses = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
   const now = new Date();
+  const auth = verifyToken(req, ['1']);
+          
+  if (!auth.valid) {
+    return res.status(auth.statusCode).json({ message: auth.message });
+  }
   try {
     const [result]: any = await pool.query("UPDATE classes Set Deleted_at = ? WHERE ClassID = ?", [now, id]);
 

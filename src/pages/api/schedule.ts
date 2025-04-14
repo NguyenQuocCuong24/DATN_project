@@ -1,16 +1,36 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import pool from "@/configs/db";
 import { convertStringToDate } from "@/utils/convertDate";
+import { verifyToken } from "../helper/auth";
 
 const getSchedule = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
+    const auth = verifyToken(req, ['1']);
+    
+    if (!auth.valid) {
+      return res.status(auth.statusCode).json({ message: auth.message });
+    }
+
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+    const offset = (page - 1) * limit;
+
     const search = req.query.search ? `%${req.query.search}%` : "%";
     const [rows]: any = await pool.query(
       `SELECT ScheduleID, ClassID, DayOfWeek, Subject, StartTime, EndTime
-      FROM schedule WHERE Deleted_at IS NULL and Subject LIKE ?`,
+      FROM schedule WHERE Deleted_at IS NULL and Subject LIKE ? 
+      LIMIT ? OFFSET ?`,
+      [search, limit, offset]
+    );  
+      
+    const [[{ total }]]: any = await pool.query(
+      `SELECT COUNT(*) as total 
+       FROM schedule 
+       WHERE Deleted_at IS NULL AND Subject LIKE ?`,
       [search]
-    );    
-    return res.status(200).json(rows);
+    );
+
+    return res.status(200).json({ rows, total });
   } catch (error) {
     console.error("Lỗi khi lấy danh sách thời khóa biểu:", error);
     return res.status(500).json({ message: "Lỗi server" });
@@ -19,6 +39,11 @@ const getSchedule = async (req: NextApiRequest, res: NextApiResponse) => {
 
 const addSchedule = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
+    const auth = verifyToken(req, ['1']);
+    
+    if (!auth.valid) {
+      return res.status(auth.statusCode).json({ message: auth.message });
+    }
     const { ClassID, DayOfWeek, Subject, StartTime, EndTime } = req.body;
     let date = convertStringToDate(DayOfWeek);
     
@@ -42,6 +67,11 @@ const addSchedule = async (req: NextApiRequest, res: NextApiResponse) => {
 const updateSchedule = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
   try {
+    const auth = verifyToken(req, ['1']);
+    
+    if (!auth.valid) {
+      return res.status(auth.statusCode).json({ message: auth.message });
+    }
     const { ClassID, DayOfWeek, Subject, StartTime, EndTime } = req.body;
     let date = convertStringToDate(DayOfWeek);
 
@@ -69,6 +99,11 @@ const updateSchedule = async (req: NextApiRequest, res: NextApiResponse) => {
 const deleteSchedule = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
   const now = new Date();
+  const auth = verifyToken(req, ['1']);
+    
+  if (!auth.valid) {
+    return res.status(auth.statusCode).json({ message: auth.message });
+  }
   try {
     const [result]: any = await pool.query("UPDATE schedule Set Deleted_at = ? WHERE ScheduleID = ?", [now, id]);
 
