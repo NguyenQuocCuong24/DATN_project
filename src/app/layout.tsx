@@ -1,8 +1,6 @@
 import AppProvider from "@/configs/AppProvider";
 import theme from "@/styles/theme";
-import { CssBaseline } from "@mui/material";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
-import { ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider, CssBaseline } from '@mui/material';
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { ToastContainer } from "react-toastify";
@@ -54,12 +52,12 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${sourceSans3.variable} ${stixTwoText.variable} antialiased`}
       >
         <AppProvider>
-          <AppRouterCacheProvider>
-            <ThemeProvider theme={theme}>
-              <CssBaseline />
-              {children}
-            </ThemeProvider>
-          </AppRouterCacheProvider>
+
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            {children}
+          </ThemeProvider>
+
           <ToastContainer
             position='top-right'
             autoClose={2000}

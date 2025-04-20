@@ -1,6 +1,6 @@
-'use client'
-import Image from 'next/image'
-import React from 'react'
+'use client';
+import Image from 'next/image';
+import React from 'react';
 
 export default function Intro() {
     const introItems = [
@@ -13,11 +13,13 @@ export default function Intro() {
 
     return (
         <div
-            className="w-screen min-h-screen bg-cover bg-center flex items-center px-6 py-12"
+            className="w-screen min-h-screen bg-cover bg-center flex items-center px-6 py-12 relative"
             style={{ backgroundImage: 'url("/assets/images/bg_intro.png")' }}
         >
-            <div className="bg-opacity-40 w-full h-full absolute top-0 left-0 z-0"></div>
+            {/* Overlay tối nhưng không cản tương tác */}
+            <div className="absolute inset-0 bg-opacity-40 pointer-events-none z-0" />
 
+            {/* Nội dung chính */}
             <div className="relative z-10 max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
                 {/* Hình ảnh */}
                 <div className="flex justify-center">
@@ -45,5 +47,5 @@ export default function Intro() {
                 </div>
             </div>
         </div>
-    )
+    );
 }

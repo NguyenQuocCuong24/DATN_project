@@ -8,9 +8,9 @@ export default function page() {
   return (
     <div className='container'>
       <Slider />
-      <System/>
-      <Intro/>
-      <Block/>
+      <System />
+      <Intro />
+      <Block />
     </div>
   )
 }

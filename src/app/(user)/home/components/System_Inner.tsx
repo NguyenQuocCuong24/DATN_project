@@ -1,4 +1,5 @@
 'use client'
+
 export default function FeaturesSection() {
     const features = [
         {
@@ -44,13 +45,14 @@ export default function FeaturesSection() {
     ];
 
     return (
-        <div className="bg-sky-200 py-12 px-6 w-screen">
+        <div className="bg-sky-200 py-12 w-screen overflow-x-hidden ">
+
             <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 text-center">
                 {features.map((item, index) => (
-                    <div key={index} className="flex flex-col items-center p-4">
+                    <div key={index} className="flex flex-col items-center p-4 bg-white rounded-xl shadow hover:scale-[1.02] transition">
                         <div className="text-5xl mb-4">{item.icon}</div>
                         <h3 className="text-lg font-bold mb-2">{item.title}</h3>
-                        <hr className="w-56 border-t-2 border-amber-50 mb-2" />
+                        <hr className="w-56 border-t-2 border-amber-100 mb-2" />
                         <p className="text-sm text-gray-700">{item.description}</p>
                     </div>
                 ))}

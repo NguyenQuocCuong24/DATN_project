@@ -63,7 +63,7 @@ export default function Slider() {
 
   return (
     <div>
-      <div className="relative w-screen h-[500px] overflow-hidden group bg-white">
+      <div className="relative w-screen h-[500px] overflow-hidden group">
         {/* Background image */}
         <Image
           src="/assets/images/bg_slide02.png"
@@ -78,7 +78,6 @@ export default function Slider() {
             className="flex h-full transition-transform duration-[1200ms] ease-[cubic-bezier(0.25,1,0.5,1)] will-change-transform"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
           >
-
             {images.map((img, index) => (
               <div key={index} className="w-full flex flex-shrink-0 h-full">
                 {/* Text mô tả bên trái */}
@@ -113,13 +112,13 @@ export default function Slider() {
           {/* Nút chuyển slide */}
           <button
             onClick={prevSlide}
-            className="absolute top-1/2 left-1/12 z-20 transform -translate-y-1/2 bg-white/70 hover:bg-white p-3 rounded-full shadow opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className="absolute cursor-pointer top-1/2 left-1/12 z-20 transform -translate-y-1/2 bg-white/70 hover:bg-white p-3 rounded-full shadow opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           >
             <ChevronLeft size={28} />
           </button>
           <button
             onClick={nextSlide}
-            className="absolute top-1/2 right-1/12 z-20 transform -translate-y-1/2 bg-white/70 hover:bg-white p-3 rounded-full shadow opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className="absolute cursor-pointer top-1/2 right-1/12 z-20 transform -translate-y-1/2 bg-white/70 hover:bg-white p-3 rounded-full shadow opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           >
             <ChevronRight size={28} />
           </button>
